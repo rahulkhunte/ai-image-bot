@@ -1,3 +1,10 @@
 # Show the file contents to copy:
 echo "=== bot.py ==="
+
 cat ~/nft-telegram-bot/bot.py
+
+echo -e "\n=== requirements.txt ==="
+cat ~/nft-telegram-bot/requirements.txt
+
+echo -e "\n=== README.md ==="
+cat ~/nft-telegram-bot/README.md
