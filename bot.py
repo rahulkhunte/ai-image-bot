@@ -148,6 +148,35 @@ async def generate_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await status.delete()
     except:
         pass
+async def buy_credits(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Show payment info"""
+    await update.message.reply_text(
+        "💰 *Buy More Credits*\n\n"
+        "📦 *Packages:*\n"
+        "💎 10 images = ₹100 (0.5 TON)\n"
+        "⚡ 50 images = ₹400 (2 TON)\n"
+        "🚀 100 images = ₹700 (3.5 TON)\n\n"
+        "🇮🇳 *UPI:* `rahulkhunte@ybl`\n"
+        "🌐 *TON:* `UQAUDbGlEj0mgQe-yu8r7Iree8OEAn4CB7l8t2447N6tteRI`\n\n"
+        "📝 *Steps:*\n"
+        "1. Pay via UPI/TON\n"
+        "2. Send screenshot + /myid\n"
+        "3. Credits added in 5 mins!\n\n"
+        "Contact: @your_username",
+        parse_mode='Markdown'
+    )
+async def myid(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Show user their ID"""
+    user_id = update.message.from_user.id
+    credits = user_credits.get(user_id, 0)
+    
+    await update.message.reply_text(
+        f"👤 *Your Details*\n\n"
+        f"User ID: `{user_id}`\n"
+        f"💎 Credits: {credits}\n\n"
+        f"Send this ID after payment!",
+        parse_mode='Markdown'
+    )
 
 def main():
     if not BOT_TOKEN:
@@ -155,10 +184,11 @@ def main():
         return
     
     app = Application.builder().token(BOT_TOKEN).build()
-    
+    app.add_handler(CommandHandler("myid", myid))
+
     # Add all handlers
     app.add_handler(CommandHandler("start", start))
-    #app.add_handler(CommandHandler("buy", buy_credits))
+    app.add_handler(CommandHandler("buy", buy_credits))
     app.add_handler(CommandHandler("myid", myid))
     app.add_handler(CommandHandler("addcredits", add_credits_cmd))
     app.add_handler(CallbackQueryHandler(button_handler))
@@ -183,6 +213,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 
