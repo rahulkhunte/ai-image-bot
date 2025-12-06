@@ -138,7 +138,7 @@ async def myid(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def add_credits_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Admin command to add credits"""
-    if update.message.from_user.id != ADMIN_ID: 7226303447
+    if update.message.from_user.id != ADMIN_ID = 7226303447  # Replace with your Telegram user ID
         return
     
     try:
@@ -266,4 +266,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
