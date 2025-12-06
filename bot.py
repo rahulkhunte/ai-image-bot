@@ -13,8 +13,7 @@ logger = logging.getLogger(__name__)
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 GPU_API = os.environ.get('GPU_API', 'http://106.54.57.182:8000')
 FREE_CREDITS = 50  # Set to 50 as you wanted
-ADMIN_ID = 7704087537  # Replace with your Telegram user ID
-
+ADMIN_ID = 7226303447  # Replace with your Telegram user ID
 # In-memory storage
 user_credits = {}
 
@@ -138,7 +137,7 @@ async def myid(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def add_credits_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Admin command to add credits"""
-    if update.message.from_user.id != ADMIN_ID = 7226303447  # Replace with your Telegram user ID
+    if update.message.from_user.id != ADMIN_ID:
         return
     
     try:
@@ -266,5 +265,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
