@@ -138,7 +138,7 @@ async def myid(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def add_credits_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Admin command to add credits"""
-    if update.message.from_user.id != ADMIN_ID:
+    if update.message.from_user.id != ADMIN_ID: 7226303447
         return
     
     try:
@@ -266,3 +266,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
