@@ -257,6 +257,11 @@ def main():
     app.add_handler(CommandHandler("addcredits", add_credits_admin))
     app.add_handler(CallbackQueryHandler(button_handler))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, generate_handler))
+# Add these to your application
+application.add_handler(CommandHandler("buy", buy_handler))
+application.add_handler(CallbackQueryHandler(payment_callback, pattern="^buy_"))
+application.add_handler(PreCheckoutQueryHandler(precheckout_callback))
+application.add_handler(MessageHandler(filters.SUCCESSFUL_PAYMENT, successful_payment_callback))
     
     logger.info("✅ @Jenerator_bot starting...")
     logger.info(f"🔗 GPU API: {GPU_API}")
@@ -323,14 +328,9 @@ async def successful_payment_callback(update: Update, context: ContextTypes.DEFA
         f"Use /generate to create images!"
     )
 
-# Add these to your application
-application.add_handler(CommandHandler("buy", buy_handler))
-application.add_handler(CallbackQueryHandler(payment_callback, pattern="^buy_"))
-application.add_handler(PreCheckoutQueryHandler(precheckout_callback))
-application.add_handler(MessageHandler(filters.SUCCESSFUL_PAYMENT, successful_payment_callback))
-
 if __name__ == '__main__':
     main()
+
 
 
 
