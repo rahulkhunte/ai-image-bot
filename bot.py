@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 # Config
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 GPU_API = os.environ.get('GPU_API', 'http://106.54.57.182:8000')
-FREE_CREDITS = 50
+FREE_CREDITS = 15
 ADMIN_ID = 7226303447
 
 # In-memory storage
@@ -273,4 +273,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
