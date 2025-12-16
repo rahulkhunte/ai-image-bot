@@ -136,19 +136,21 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     elif query.data == 'buy':
         keyboard = [
-            [InlineKeyboardButton("💎 100 Credits - 50 Stars (~₹99)", callback_data="buy_100")],
-            [InlineKeyboardButton("🔥 500 Credits - 200 Stars (~₹399) ⭐BEST", callback_data="buy_500")],
-            [InlineKeyboardButton("⚡ 1000 Credits - 350 Stars (~₹699)", callback_data="buy_1000")]
-        ]
+    [InlineKeyboardButton("💎 100 Credits - $1.20", callback_data="buy_100")],
+    [InlineKeyboardButton("🔥 500 Credits - $4.80 ⭐BEST VALUE", callback_data="buy_500")],
+    [InlineKeyboardButton("⚡ 1000 Credits - $8.40", callback_data="buy_1000")]
+]
+
         await query.message.reply_text(
-            f"💰 *Buy Credits*\n\n"
-            f"Standard: 1 credit per image\n"
-            f"HD: 3 credits per image\n"
-            f"4K: 10 credits per image\n\n"
-            f"Choose package:",
-            parse_mode='Markdown',
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
+    f"💰 *Buy Credits*\n\n"
+    f"📱 Standard: 1 credit = ~$0.01\n"
+    f"💎 HD: 3 credits = ~$0.04\n"
+    f"🔥 4K: 10 credits = ~$0.12\n\n"
+    f"Choose package:",
+    parse_mode='Markdown',
+    reply_markup=InlineKeyboardMarkup(keyboard)
+)
+
     
     elif query.data == 'invite':
         bot_username = (await context.bot.get_me()).username
@@ -290,3 +292,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
