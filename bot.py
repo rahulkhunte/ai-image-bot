@@ -136,6 +136,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 title=title,
                 description=f"Get {credits_amount} credits to generate AI images!",
                 payload=f"credits_{credits_amount}",
+                provider_token="",
                 currency="XTR",
                 prices=[LabeledPrice(label=f"{credits_amount} Credits", amount=stars)]
             )
@@ -272,3 +273,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
