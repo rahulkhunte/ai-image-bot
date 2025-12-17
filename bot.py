@@ -142,11 +142,11 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 ]
 
         await query.message.reply_text(
-    f"💰 *Buy Credits*\n\n"
-    f"📱 Standard: 1 credit = ~$0.01\n"
-    f"💎 HD: 3 credits = ~$0.04\n"
-    f"🔥 4K: 10 credits = ~$0.12\n\n"
-    f"Choose package:",
+    f"💰 *Buy Credits = Buy Images!*\n\n"
+    f"💎 $1.20 = 100 images (Standard)\n"
+    f"🔥 $4.80 = 166 HD images ⭐BEST\n"
+    f"⚡ $8.40 = 1000 images (Pro)\n\n"
+    f"Your credits: {credits}",
     parse_mode='Markdown',
     reply_markup=InlineKeyboardMarkup(keyboard)
 )
@@ -292,4 +292,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
