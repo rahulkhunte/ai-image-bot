@@ -141,6 +141,9 @@ docker run -d \
   -e TELEGRAM_BOT_TOKEN=your_token \
   -v $(pwd)/outputs:/app/outputs \
   jenerator-bot
+
+```
+  
 📊 Performance Metrics
 Metric	Value	Notes
 Generation time	3.8s avg	L40 GPU, SDXL Turbo
