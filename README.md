@@ -241,7 +241,7 @@ Connect:
 
 📧 Email: rahulk.rk903@gmail.com
 
-💼 GitHub: [@rahulkhunte](https://github.com/rahulkhunte)
+💼 GitHub:https://github.com/rahulkhunte
 
 💵 Freelance rate: $20-30/hr
 
