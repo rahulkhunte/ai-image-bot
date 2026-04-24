@@ -243,7 +243,6 @@ Connect:
 
 💼 GitHub:https://github.com/rahulkhunte
 
-💵 Freelance rate: $20-30/hr
 
 📄 License
 MIT License - Open for personal and commercial use
