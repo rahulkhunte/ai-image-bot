@@ -244,10 +244,10 @@ Connect:
 💼 GitHub:https://github.com/rahulkhunte
 
 
-📄 License
+# 📄 License
 MIT License - Open for personal and commercial use
 
-🙏 Acknowledgments
+# 🙏 Acknowledgments
 Stability AI for SDXL models
 
 ComfyUI community
@@ -255,10 +255,11 @@ ComfyUI community
 python-telegram-bot developers
 
 <div align="center">
+  
 ⭐ Star this repo if you find it useful! ⭐
 
 Powered by L40 GPU • SDXL Turbo • ComfyUI • Telegram Bot API
 
 Interested in building similar systems? Let's talk!
 
-</div> ```
+</div> 
