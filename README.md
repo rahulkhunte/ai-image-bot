@@ -8,6 +8,8 @@ Production-ready Telegram bot with GPU-accelerated image generation using Stable
 
 📄 **[View Full Project Portfolio](https://rahulkhunte.github.io/portfolio/AI_Image_Bot_Portfolio.html)**
 
+📖 **Full tutorial:** [Read on dev.to](https://dev.to/rahulkhunte/i-built-a-telegram-bot-that-generates-ai-images-using-stable-diffusion-heres-how-2n59)
+
 > ⚠️ **Note:** Demo currently paused for infrastructure optimization. Full codebase and deployment guide available.
 
 ## ✨ Features
