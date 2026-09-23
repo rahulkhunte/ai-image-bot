@@ -241,8 +241,6 @@ Connect:
 
 🌐 Portfolio:https://rahulkhunte.github.io/portfolio
 
-📧 Email: rahulk.rk903@gmail.com
-
 💼 GitHub:https://github.com/rahulkhunte
 
 
