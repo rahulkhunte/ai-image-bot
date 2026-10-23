@@ -1,9 +1,7 @@
 # 🤖 Jenerator Bot - AI Image Generation
 
-Production-ready Telegram bot with GPU-accelerated image generation using Stable Diffusion XL Turbo. Generate high-quality images in under 4 seconds with natural language prompts.
+Telegram bot for AI image generation with a credit system, referral bonuses, three quality tiers and Telegram Stars payments. The bot forwards prompts to a separate GPU image-generation API (`GPU_API`) and sends the resulting image back to the user.
 
-[![Status](https://img.shields.io/badge/Status-Production_Ready-brightgreen)](https://t.me/Jenerator_bot)
-[![GPU](https://img.shields.io/badge/GPU-L40_48GB-76B900?logo=nvidia)](https://www.nvidia.com/en-us/data-center/l40/)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python)](https://www.python.org/)
 
 📄 **[View Full Project Portfolio](https://rahulkhunte.github.io/portfolio/AI_Image_Bot_Portfolio.html)**
@@ -14,95 +12,58 @@ Production-ready Telegram bot with GPU-accelerated image generation using Stable
 
 ## ✨ Features
 
-### Core Capabilities
-- ⚡ **Lightning-fast generation** - Sub-4 second image creation (L40 GPU)
-- 🎨 **High-quality outputs** - SDXL Turbo model for photorealistic results
-- 🔧 **ComfyUI backend** - Professional workflow management
-- 💬 **Telegram integration** - Intuitive bot interface with inline buttons
-- 💰 **Payment system** - Cryptocurrency payment integration
-- 📊 **Usage tracking** - Credit system with transaction history
-- 🖼️ **Gallery system** - Browse and regenerate previous images
+- 💬 **Telegram bot** - `/start` menu with inline buttons (Generate, My Credits, Buy Credits, Invite Friends)
+- 💎 **Credits** - every new user gets 15 free credits
+- 🎁 **Referrals** - invite link (`/start <user_id>`); the new user and the referrer each get +20 credits
+- 🖼️ **Three quality tiers:**
 
-### Technical Highlights
-- GPU-optimized inference pipeline
-- Asynchronous request handling
-- Docker containerization
-- Production-grade error handling
-- Automatic queue management
-- Real-time generation status updates
+  | Tier | Size | Cost |
+  |------|------|------|
+  | Standard | 512x512 | 1 credit |
+  | HD | 1024x1024 | 3 credits |
+  | 4K | 2048x2048 | 10 credits |
 
-## 🎯 Why This Project Matters
+- ⭐ **Telegram Stars payments** - invoices in Stars (`XTR`) with pre-checkout and successful-payment handlers:
 
-This bot demonstrates:
-- **Production ML deployment** - Not a toy project, handles real user traffic
-- **GPU infrastructure management** - CUDA optimization, memory handling
-- **Full-stack integration** - Frontend (Telegram) + Backend (Python) + ML (PyTorch)
-- **Monetization** - Real payment processing and credit systems
-- **Scalability** - Designed for concurrent user requests
+  | Package | Price |
+  |---------|-------|
+  | 100 credits | 50 Stars |
+  | 500 credits | 200 Stars |
+  | 1000 credits | 350 Stars |
 
-**Real-world impact:** 2000+ images generated for actual users
+- 🟢 **GPU health check** - `/start` pings `GPU_API/health` and shows the status
+- 🎨 **Image generation** - any text message is sent as a prompt to `GPU_API/generate`; credits are deducted only when an image comes back
 
 ## 🛠️ Tech Stack
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
-| **ML Model** | SDXL Turbo | Fast, high-quality image generation |
-| **Backend** | Python 3.10+ | Core bot logic |
-| **Inference** | PyTorch + CUDA | GPU-accelerated processing |
-| **Workflow** | ComfyUI | Node-based generation pipeline |
-| **Bot Framework** | python-telegram-bot | Telegram API integration |
-| **GPU** | NVIDIA L40 (48GB) | High-performance inference |
-| **Deployment** | Docker + Railway | Containerized production environment |
-| **Storage** | rclone + Google Drive | Image backup and retrieval |
-| **Monitoring** | Custom logging | Performance tracking |
+| **Bot Framework** | python-telegram-bot 21 | Telegram API integration (long polling) |
+| **Backend** | Python 3.10+ | Bot logic, credits, payments |
+| **Payments** | Telegram Stars (`XTR`) | Credit purchases |
+| **Image generation** | Separate GPU API (`GPU_API`) | Not included in this repo |
+| **Deployment** | Docker + Railway (Procfile, nixpacks) | Containerized deployment |
 
+## 🔌 GPU API contract
 
+The image model runs on a separate GPU server, served by an SDXL Turbo backend (not in this repo). The bot expects:
 
-## 📋 Key Features Breakdown
+- `GET {GPU_API}/health` → HTTP 200 when the server is up
+- `POST {GPU_API}/generate` with JSON `{"prompt": "...", "size": "1024x1024"}` → image bytes (PNG)
 
-### 1. Image Generation
-Input: "A futuristic city at sunset, cyberpunk style"
-Processing: < 4 seconds
-Output: 1024x1024 high-quality image
+## ⚠️ Limitations
 
-text
-
-### 2. Bot Commands
-- `/start` - Initialize bot, show menu
-- `/generate` - Create new image from prompt
-- `/gallery` - View your previous generations
-- `/credits` - Check balance
-- `/buy` - Purchase credits
-
-### 3. User Experience
-- Clean inline keyboard navigation
-- Real-time generation progress
-- Image preview before download
-- Credit deduction confirmation
-- Payment instructions (crypto)
-
-## 💰 Monetization Model
-
-**Credit System:**
-- 1 credit = 1 image generation
-- Pricing tiers for bulk purchases
-- Cryptocurrency payment integration
-- Automatic credit allocation
-
-**Technical implementation:**
-- Secure transaction verification
-- Database credit tracking
-- Payment gateway integration
-- Invoice generation
+- Credits and referrals are kept in memory and reset when the bot restarts.
+- No rate limiting; generation requests are handled one at a time.
+- Style prefixes such as `/anime girl` are not applied yet (messages starting with `/` don't reach the generator).
 
 ## 🚀 Deployment Guide
 
 ### Prerequisites
 - Python 3.10+
-- CUDA-capable GPU (8GB+ VRAM recommended)
-- Telegram Bot Token
-- ComfyUI installation
-- Docker (optional but recommended)
+- Telegram Bot Token (from @BotFather)
+- A running GPU image API that implements the contract above
+- Docker (optional)
 
 ### Local Setup
 
@@ -110,156 +71,73 @@ text
 ```bash
 git clone https://github.com/rahulkhunte/ai-image-bot.git
 cd ai-image-bot
-2. Install dependencies:
+```
 
-bash
+**2. Install dependencies:**
+```bash
 pip install -r requirements.txt
-3. Download models:
+```
 
-bash
-# SDXL Turbo checkpoint (~6.5GB)
-# Place in ComfyUI/models/checkpoints/
-4. Configure environment:
+**3. Configure environment** (see `.env.example`):
+```bash
+BOT_TOKEN=your_token_here
+GPU_API=http://your-gpu-server:8000
+ADMIN_ID=0   # optional
+```
 
-bash
-# Create .env file
-TELEGRAM_BOT_TOKEN=your_token_here
-COMFYUI_API_URL=http://localhost:8188
-GPU_DEVICE=cuda:0
-5. Start ComfyUI:
-
-bash
-cd ComfyUI
-python main.py --listen 0.0.0.0
-6. Launch bot:
-
-bash
+**4. Launch bot:**
+```bash
 python bot.py
-Docker Deployment
-bash
+```
+
+### Docker Deployment
+```bash
 docker build -t jenerator-bot .
 docker run -d \
-  --gpus all \
-  -e TELEGRAM_BOT_TOKEN=your_token \
-  -v $(pwd)/outputs:/app/outputs \
+  -e BOT_TOKEN=your_token \
+  -e GPU_API=http://your-gpu-server:8000 \
   jenerator-bot
-
 ```
-  
-## 📊 Performance Metrics
-Metric	Value	Notes
-Generation time	3.8s avg	L40 GPU, SDXL Turbo
-Concurrent users	5-10	Queue-based system
-Image quality	1024x1024	High-resolution outputs
-Success rate	98%+	Error handling implemented
-Total generated	2000+	Production usage
-🔒 Security & Privacy
-User data encrypted
 
-No image retention (optional deletion)
-
-Secure payment processing
-
-Rate limiting implemented
-
-Input sanitization
-
----
+### Railway
+`Procfile` (`worker: python bot.py`) and `nixpacks.toml` are included for Railway deployment. Set `BOT_TOKEN` and `GPU_API` as environment variables.
 
 ## 🧩 Project Structure
 ```bash
 ai-image-bot/
-├── bot.py                # Main bot logic
-├── comfyui_client.py     # ComfyUI API wrapper
-├── payment_handler.py    # Crypto payment processing
-├── database.py           # User/credit management
-├── workflows/            # ComfyUI JSON workflows
-├── models/               # ML models (not in repo)
-├── outputs/              # Generated images
+├── bot.py                # Bot logic: menu, credits, referrals, Stars payments, generation
 ├── requirements.txt      # Python dependencies
 ├── Dockerfile            # Container configuration
-└── README.md            # This file
-🔮 Roadmap
-Planned features:
-
- Video generation (Stable Video Diffusion)
-
- Multiple model support (FLUX, Midjourney-style)
-
- Custom LoRA training
-
- Web dashboard interface
-
- API access for developers
-
- Multi-language support
-
+├── Procfile              # Railway/Heroku worker
+├── nixpacks.toml         # Railway build config
+├── runtime.txt           # Python version
+├── .env.example          # Environment variable template
+└── README.md             # This file
 ```
----
 
-## 🤝 Use Cases
-Content creation - Marketing visuals, social media
-
-Prototyping - Concept art, design mockups
-
-Education - Learning prompt engineering
-
-Research - Studying generative AI capabilities
-
-Commercial - SaaS product foundation
-
----
+## 🔮 Roadmap
+- Persistent storage for credits and payments
+- Rate limiting and a generation queue
+- Working style prefixes and `/buy`, `/credits` commands
+- Video generation
+- Multiple model support
 
 ## 💼 About the Developer
-Rahul Khunte - AI/ML Engineer specializing in GPU-accelerated systems
-
-This project showcases:
-
-Production ML deployment skills
-
-GPU infrastructure management
-
-Full-stack development (ML + Backend + Bot)
-
-Real-world problem-solving under constraints
-
-Monetization implementation
+Rahul Khunte - AI/ML Engineer
 
 Available for similar projects:
-
-AI/ML model deployment & optimization
-
-Telegram/Discord bot development
-
-GPU API infrastructure
-
-Image/video generation systems
-
-Payment integration
+- Telegram/Discord bot development
+- Payment integration
+- Image/video generation systems
 
 Connect:
 
-🌐 Portfolio:https://rahulkhunte.github.io/portfolio
+🌐 Portfolio: https://rahulkhunte.github.io/portfolio
 
-💼 GitHub:https://github.com/rahulkhunte
-
+💼 GitHub: https://github.com/rahulkhunte
 
 # 📄 License
 MIT License - Open for personal and commercial use
 
 # 🙏 Acknowledgments
-Stability AI for SDXL models
-
-ComfyUI community
-
 python-telegram-bot developers
-
-<div align="center">
-  
-⭐ Star this repo if you find it useful! ⭐
-
-Powered by L40 GPU • SDXL Turbo • ComfyUI • Telegram Bot API
-
-Interested in building similar systems? Let's talk!
-
-</div> 
